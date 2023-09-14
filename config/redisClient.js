@@ -17,7 +17,7 @@ async function get_set_data_redis(key, cb) {
     await redisClient.setEx(key, 3600, JSON.stringify(newData));
     await redisClient.quit();
     return {
-      message: "No Data in Redis!",
+      message: "Data fetched from API !",
       data: newData,
     };
   } catch (error) {
