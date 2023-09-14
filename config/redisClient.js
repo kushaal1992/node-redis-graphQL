@@ -1,4 +1,5 @@
 const redis = require("redis");
+const constants = require("../config/constants");
 
 const redisClient = redis.createClient();
 
@@ -14,7 +15,11 @@ async function get_set_data_redis(key, cb) {
       };
     }
     const newData = await cb();
-    await redisClient.setEx(key, 3600, JSON.stringify(newData));
+    await redisClient.setEx(
+      key,
+      constants.redis_data_exp,
+      JSON.stringify(newData)
+    );
     await redisClient.quit();
     return {
       message: "No Data in Redis!",
