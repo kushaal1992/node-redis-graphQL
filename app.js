@@ -1,19 +1,25 @@
 const express = require("express");
 const cors = require("cors");
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer, gql } = require("apollo-server-express");
 const { expressMiddleware } = require("@apollo/server/express4");
 
+// Route Declarations
 const routes = require("./src/routes/index.route");
+
+// Variable Declarations
+const app = express();
 
 async function init() {
   const books = [
     {
       title: "The Awakening",
       author: "Kate Chopin",
+      sales: "1 M",
     },
     {
       title: "City of Glass",
       author: "Paul Auster",
+      sales: "5 M",
     },
   ];
 
@@ -21,6 +27,7 @@ async function init() {
     type Book {
       title: String
       author: String
+      sale: String
     }
 
     type Query {
@@ -36,33 +43,29 @@ async function init() {
 
   const server = new ApolloServer({ typeDefs, resolvers });
 
-  const app = express();
-
   app.use(cors({ origin: "*" }));
   app.use(express.json());
 
   app.use("/", routes.todoRoute);
 
-  await server.listen(8000, () => {
-    console.log(`GraphQL Server listening at port 8000`);
-  });
+  await server.start();
+  server.applyMiddleware({ app });
 
-  app.use("/graphql", expressMiddleware(server));
+  //   app.use("/graphql", expressMiddleware(server));
 
-  app.get("/", (req, res) => {
-    res.json({
-      status: 200,
-      message: "Default route!",
-      data: [],
-    });
-  });
-
-  app.listen(8001, (err) => {
-    if (err) return `Server not running due to ${err.message}`;
-    console.log(`App Server listening at port 8001`);
-  });
+  //   app.get("/", (req, res) => {
+  //     res.json({
+  //       status: 200,
+  //       message: "Default route!",
+  //       data: [],
+  //     });
+  //   });
 }
 
 init();
+app.listen(8001, (err) => {
+  if (err) return `Server not running due to ${err.message}`;
+  console.log(`App Server listening at port 8001`);
+});
 
 // module.exports = app;
