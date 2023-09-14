@@ -27,7 +27,7 @@ async function init() {
     type Book {
       title: String
       author: String
-      sale: String
+      sales: String
     }
 
     type Query {
@@ -53,13 +53,13 @@ async function init() {
 
   //   app.use("/graphql", expressMiddleware(server));
 
-  //   app.get("/", (req, res) => {
-  //     res.json({
-  //       status: 200,
-  //       message: "Default route!",
-  //       data: [],
-  //     });
-  //   });
+  app.get("/", (req, res) => {
+    res.json({
+      status: 200,
+      message: "Default route!",
+      data: [],
+    });
+  });
 }
 
 init();
