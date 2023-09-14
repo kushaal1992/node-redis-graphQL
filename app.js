@@ -18,9 +18,9 @@ app.get("/", (req, res) => {
 
 app.use("/", routes.todoRoute);
 
-// app.listen(8000, (err) => {
-//   if (err) return `Server not running due to ${err.message}`;
-//   console.log(`Server listening at port 8000`);
-// });
+app.listen(8000, (err) => {
+  if (err) return `Server not running due to ${err.message}`;
+  console.log(`Server listening at port 8000`);
+});
 
-module.exports = app;
+// module.exports = app;
