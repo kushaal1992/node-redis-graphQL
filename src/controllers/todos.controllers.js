@@ -1,6 +1,6 @@
 const axios = require("axios");
 const get_set_data = require("../../config/redisClient").get_set_data_redis;
-const formatResponse = require("../utils/apiResponse").formatResponse;
+const { formatResponse } = require("../utils/apiResponse");
 
 async function getAllTodos(req, res) {
   try {

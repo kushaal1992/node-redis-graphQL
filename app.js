@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const routes = require("./src/routes/index.route");
+const { formatResponse } = require("./src/utils/apiResponse");
 
 const app = express();
 const port = parseInt(process.env.PORT);
@@ -11,11 +12,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.json({
-    status: 200,
-    message: "Default route!",
-    data: [],
-  });
+  formatResponse(res, 200, `App running on ${port}!`, [])
 });
 
 app.use("/", routes.todoRoute);
